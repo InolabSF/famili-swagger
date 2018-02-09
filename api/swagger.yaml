@@ -1,0 +1,211 @@
+swagger: "2.0"
+info:
+  description: "Fammili is a stress-free weekend planner that allows you to enjoy casual and affordable weekends. [heroku](https://famili-app.herokuapp.com) [github](https://github.com/InolabSF/famili-server)"
+  version: "0.1.0"
+  title: "fammili-server"
+  termsOfService: ""
+  contact:
+    email: "kenzan.hase@isidentsu.com"
+host: "famili-app.herokuapp.com"
+basePath: "/"
+tags:
+- name: "ActivityController"
+  description: "Everything about Activity"
+schemes:
+- "https"
+paths:
+  /activity:
+    get:
+      tags:
+      - "activity"
+      summary: "API serving json about one activity."
+      description: ""
+      operationId: "get_activity"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "activity_id"
+        in: "query"
+        description: "Activity#id"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        400:
+          description: "Invalid activity_id"  
+securityDefinitions:
+  petstore_auth:
+    type: "oauth2"
+    authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
+    flow: "implicit"
+    scopes:
+      write:pets: "modify pets in your account"
+      read:pets: "read your pets"
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  Delivery:
+    type: "object"
+    description: "Activity that Fammili suggests to users. If both start_date and end_date are nil, it is delivered when tutorial."
+    properties:
+      id:
+        type: "integer"
+      activity_id:
+        type: "integer"
+        description: "Activity#id"
+      start_date:
+        type: "string"
+        format: "datetime"
+        description: "date: when delivery starts."
+      end_date:
+        type: "string"
+        format: "datetime"
+        description: "date: when delivery ends."
+  Plan:
+    type: "object"
+    description: "Plan type how user spends a day."
+    properties:
+      id:
+        type: "integer"
+      name:
+        type: "string"
+        description: "Plan's name. e.g. 'Activity', 'Coming Soon', 'Busy', 'EMPTY', etc."
+  Cancel:
+    type: "object"
+    description: "Reason why user canceled activity."
+    properties:
+      id:
+        type: "integer"
+      name:
+        type: "string"
+        description: "Cancellation reason's name. e.g. 'Weather Condition', 'Not in the mood', 'Kids are not in the mood', 'Too expensive', 'Too far', 'Already have a plan', 'Other', etc.n"
+  Activity:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      plan_id:
+        type: "integer"
+        description: "Plan#id"
+      name:
+        type: "string"
+      desc:
+        type: "string"
+      url:
+        type: "string"
+        format: "url string"
+  ActivityImage:
+    type: "object"
+    description: "This image belongs to activity. activity has many activity_images."
+    properties:
+      id:
+        type: "integer"
+      activity_id:
+        type: "integer"
+        description: "Activity#id"
+      url:
+        type: "string"
+        format: "url string"
+        description: "url of the image"
+  ActivityFeature:
+    type: "object"
+    description: "This feature belongs to activity. activity has one activity_feature."
+    properties:
+      id:
+        type: "integer"
+      activity_id:
+        type: "integer"
+        description: "Activity#id"
+      cost:
+        type: "integer"
+      fuel:
+        type: "integer"
+      age:
+        type: "integer"
+      distance:
+        type: "integer"
+  ActivityHour:
+    type: "object"
+    description: "This hour belongs to activity. activity has many activity_hours."
+    properties:
+      id:
+        type: "integer"
+      activity_id:
+        type: "integer"
+        description: "Activity#id"
+      start_date:
+        type: "string"
+        format: "datetime"
+      end_date:
+        type: "string"
+        format: "datetime"
+  UserInterest:
+    type: "object"
+    description: "Log a user was intrested in an activity."
+    properties:
+      id:
+        type: "integer"
+      user_id:
+        type: "integer"
+        description: "User#id"
+      activity_id:
+        type: "integer"
+        description : "Activity#id"
+      value:
+        type: "integer"
+        description: "0: The user isn't interested in the activity.\n1: The user is interested in the activity."
+  UserRating:
+    type: "object"
+    description: "Log a user made a rating to an activity."
+    properties:
+      id:
+        type: "integer"
+      user_id:
+        type: "integer"
+        description: "User#id"
+      activity_id:
+        type: "integer"
+        description : "Activity#id"
+      value:
+        type: "integer"
+        description: "0-5: rating score.\n-1: the user hasn't done the activity."
+      cancel_id:
+        type: "integer"
+        description: "nil: if the user has done the activity.\nCancel#id: if user hasn't done the activity."
+  UserCancel:
+    type: "object"
+    description: "Log a user canceled doing an activity."
+    properties:
+      id:
+        type: "integer"
+      user_id:
+        type: "integer"
+        description: "User#id"
+      activity_id:
+        type: "integer"
+        description : "Activity#id"
+      cancel_id:
+        type: "integer"
+        description: "Cancel#id"
+  UserPlan:
+    description: "How user spends a day"
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      user_id:
+        type: "integer"
+        description: "User#id"
+      plan_id:
+        type: "integer"
+        description: "Plan#id"
+      activity_id:
+        type: "integer"
+        description : "nil: when the user doesn't have any activities on the date.\nActivity#id: when the plan is an activity."
+      date:
+        type: "string"
+        format: "datetime"
