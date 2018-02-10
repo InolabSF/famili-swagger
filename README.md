@@ -23,6 +23,6 @@ This project leverages the mega-awesome [swagger-tools](https://github.com/apige
 export BASIC_AUTH_USERNAME="kazuya"
 export BASIC_AUTH_PASSWORD="money2020"
 
-heroku config:set BASIC_AUTH_USERNAME="hello"
-heroku config:set BASIC_AUTH_PASSWORD="world"
+heroku config:set BASIC_AUTH_USERNAME="kazuya"
+heroku config:set BASIC_AUTH_PASSWORD="money2020"
 ```

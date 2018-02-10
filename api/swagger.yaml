@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  description: "Fammili is a stress-free weekend planner that allows you to enjoy casual and affordable weekends. [heroku](https://famili-app.herokuapp.com) [github](https://github.com/InolabSF/famili-server)"
+  description: "Fammili is a stress-free weekend planner that allows you to enjoy casual and affordable weekends.\n- [heroku](https://famili-app.herokuapp.com)\n- [github](https://github.com/InolabSF/famili-server)"
   version: "0.1.0"
   title: "fammili-server"
   termsOfService: ""
@@ -20,7 +20,7 @@ paths:
       - "activity"
       summary: "API serving json about one activity."
       description: ""
-      operationId: "get_activity"
+      operationId: "ActivityController#get_activity"
       consumes:
       - "application/json"
       produces:
@@ -31,10 +31,34 @@ paths:
         description: "Activity#id"
         required: true
         type: "integer"
-        format: "int64"
       responses:
         400:
-          description: "Invalid activity_id"  
+          description: "Invalid activity_id"
+  /activities:
+    get:
+      tags:
+      - "activities"
+      summary: "API serving json about cards that Fammili recommends to user."
+      description: ""
+      operationId: "ActivityController#get_activities"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        description: "firebase idToken: https://firebase.google.com/docs/database/rest/auth#firebase_id_tokens"
+        required: true
+        type: "string"
+      - name: "timestamp"
+        in: "query"
+        description: "unix timestamp.\n\n- When timestamp parameter is null: Tutorial (Activities that are Delivery#start_date = NULL && Delivery#end_date = NULL and Delivery#activity_id = Activity#id are delivered.)\n- Else: Activities that Fammili suggests to user."
+        required: false
+        type: "integer"
+      responses:
+        401:
+          description: "Unauthorized - invalid Authorization header"
 securityDefinitions:
   petstore_auth:
     type: "oauth2"
@@ -157,7 +181,7 @@ definitions:
         description : "Activity#id"
       value:
         type: "integer"
-        description: "0: The user isn't interested in the activity.\n1: The user is interested in the activity."
+        description: "- 0: The user isn't interested in the activity.\n- 1: The user is interested in the activity."
   UserRating:
     type: "object"
     description: "Log a user made a rating to an activity."
@@ -172,10 +196,10 @@ definitions:
         description : "Activity#id"
       value:
         type: "integer"
-        description: "0-5: rating score.\n-1: the user hasn't done the activity."
+        description: "- 0-5: rating score.\n- -1: the user hasn't done the activity."
       cancel_id:
         type: "integer"
-        description: "nil: if the user has done the activity.\nCancel#id: if user hasn't done the activity."
+        description: "- nil: if the user has done the activity.\n- Cancel#id: if user hasn't done the activity."
   UserCancel:
     type: "object"
     description: "Log a user canceled doing an activity."
@@ -205,7 +229,7 @@ definitions:
         description: "Plan#id"
       activity_id:
         type: "integer"
-        description : "nil: when the user doesn't have any activities on the date.\nActivity#id: when the plan is an activity."
+        description : "- nil: when the user doesn't have any activities on the date.\n- Activity#id: when the plan is an activity."
       date:
         type: "string"
         format: "datetime"
