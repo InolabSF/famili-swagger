@@ -9,8 +9,8 @@ info:
 host: "famili-app.herokuapp.com"
 basePath: "/"
 tags:
-- name: "ActivityController"
-  description: "Everything about Activity"
+- name: "APIs"
+  description: ""
 schemes:
 - "https"
 paths:
@@ -59,18 +59,45 @@ paths:
       responses:
         401:
           description: "Unauthorized - invalid Authorization header"
-securityDefinitions:
-  petstore_auth:
-    type: "oauth2"
-    authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
-    flow: "implicit"
-    scopes:
-      write:pets: "modify pets in your account"
-      read:pets: "read your pets"
-  api_key:
-    type: "apiKey"
-    name: "api_key"
-    in: "header"
+  /user:
+    get:
+      tags:
+      - "user"
+      summary: "API serving json about one user."
+      description: ""
+      operationId: "UserController#get_user"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        description: "firebase idToken: https://firebase.google.com/docs/database/rest/auth#firebase_id_tokens"
+        required: true
+        type: "string"
+      responses:
+        401:
+          description: "Unauthorized - invalid Authorization header"
+    post:
+      tags:
+      - "user"
+      summary: "API creating or updating a user info."
+      description: ""
+      operationId: "UserController#post_user"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        description: "firebase idToken: https://firebase.google.com/docs/database/rest/auth#firebase_id_tokens"
+        required: true
+        type: "string"
+      responses:
+        401:
+          description: "Unauthorized - invalid Authorization header"
 definitions:
   Delivery:
     type: "object"
