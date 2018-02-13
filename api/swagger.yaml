@@ -98,6 +98,80 @@ paths:
       responses:
         401:
           description: "Unauthorized - invalid Authorization header"
+  "/user/interest":
+    post:
+      tags:
+      - "user/interest"
+      summary: "API creating a model that describes if a user is interested in an activity or not."
+      description: ""
+      operationId: "UserController#post_user_interest"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        description: "firebase idToken: https://firebase.google.com/docs/database/rest/auth#firebase_id_tokens"
+        required: true
+        type: "string"
+      - name: "activity_id"
+        in: "query"
+        description: "Activity#id"
+        required: true
+        type: "integer"
+      - name: "value"
+        in: "query"
+        description: "- 1: interested\n- 0: not interested"
+        required: true
+        type: "integer"
+      responses:
+        400:
+          description: "Invalid value or activity_id"
+        401:
+          description: "Unauthorized - invalid Authorization header"
+  "/user/rating":
+    post:
+      tags:
+      - "user/rating"
+      summary: "API creating a model that describes rating of activity a user did or did not."
+      description: ""
+      operationId: "UserController#post_user_rating"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        description: "firebase idToken: https://firebase.google.com/docs/database/rest/auth#firebase_id_tokens"
+        required: true
+        type: "string"
+      - name: "activity_id"
+        in: "query"
+        description: "Activity#id"
+        required: true
+        type: "integer"
+      - name: "value"
+        in: "query"
+        description: "- 0~5: rating score\n- lesser than 0: did not do the activity"
+        required: true
+        type: "integer"
+      - name: "cancel_id"
+        in: "query"
+        description: ""
+        required: false
+        type: "integer"
+      - name: "timestamp"
+        in: "query"
+        description: "unix timestamp of activity's start date."
+        required: true
+        type: "integer"
+      responses:
+        400:
+          description: "Invalid timestamp or value or cancel_id or activity_id"
+        401:
+          description: "Unauthorized - invalid Authorization header"
 definitions:
   Delivery:
     type: "object"
