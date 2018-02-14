@@ -17,7 +17,7 @@ paths:
   /activity:
     get:
       tags:
-      - "activity"
+      - "/activity"
       summary: "API serving json about one activity."
       description: ""
       operationId: "ActivityController#get_activity"
@@ -37,7 +37,7 @@ paths:
   /activities:
     get:
       tags:
-      - "activities"
+      - "/activities"
       summary: "API serving json about cards that Fammili recommends to user."
       description: ""
       operationId: "ActivityController#get_activities"
@@ -62,7 +62,7 @@ paths:
   /user:
     get:
       tags:
-      - "user"
+      - "/user"
       summary: "API serving json about one user."
       description: ""
       operationId: "UserController#get_user"
@@ -81,7 +81,7 @@ paths:
           description: "Unauthorized - invalid Authorization header"
     post:
       tags:
-      - "user"
+      - "/user"
       summary: "API creating or updating a user info."
       description: ""
       operationId: "UserController#post_user"
@@ -101,7 +101,7 @@ paths:
   "/user/interest":
     post:
       tags:
-      - "user/interest"
+      - "/user/interest"
       summary: "API creating a model that describes if a user is interested in an activity or not."
       description: ""
       operationId: "UserController#post_user_interest"
@@ -133,7 +133,7 @@ paths:
   "/user/rating":
     post:
       tags:
-      - "user/rating"
+      - "/user/rating"
       summary: "API creating a model that describes rating of activity a user did or did not."
       description: ""
       operationId: "UserController#post_user_rating"
@@ -159,7 +159,7 @@ paths:
         type: "integer"
       - name: "cancel_id"
         in: "query"
-        description: ""
+        description: "Cancel#id"
         required: false
         type: "integer"
       - name: "timestamp"
@@ -170,6 +170,58 @@ paths:
       responses:
         400:
           description: "Invalid timestamp or value or cancel_id or activity_id"
+        401:
+          description: "Unauthorized - invalid Authorization header"
+  "/user/plan/replace":
+    post:
+      tags:
+      - "/user/plan/replace"
+      summary: "API replacing a user's plan to another plan."
+      description: ""
+      operationId: "UserController#post_user_plan_replace"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        description: "firebase idToken: https://firebase.google.com/docs/database/rest/auth#firebase_id_tokens"
+        required: true
+        type: "string"
+      - name: "cancel_id"
+        in: "query"
+        description: "Cancel#id"
+        required: false
+        type: "integer"
+      - name: "timestamp"
+        in: "query"
+        description: "unix timestamp of activity's start date."
+        required: true
+        type: "integer"
+      responses:
+        400:
+          description: "Invalid timestamp or cancel_id. The user doesn't have any plans on the timestamp date."
+        401:
+          description: "Unauthorized - invalid Authorization header"
+  "/user/schedule_version":
+    get:
+      tags:
+      - "/user/schedule_version"
+      summary: "API serving info about User#schedule_version."
+      description: ""
+      operationId: "UserController#get_user_schedule_version"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        description: "firebase idToken: https://firebase.google.com/docs/database/rest/auth#firebase_id_tokens"
+        required: true
+        type: "string"
+      responses:
         401:
           description: "Unauthorized - invalid Authorization header"
 definitions:
