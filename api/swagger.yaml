@@ -82,7 +82,7 @@ paths:
     post:
       tags:
       - "/user"
-      summary: "API creating or updating a user info."
+      summary: "API creating or updating a user."
       description: ""
       operationId: "UserController#post_user"
       consumes:
@@ -224,6 +224,33 @@ paths:
       responses:
         401:
           description: "Unauthorized - invalid Authorization header"
+  "/user/device_token":
+    post:
+      tags:
+      - "/user/device_token"
+      summary: "API updating User#device_token."
+      description: ""
+      operationId: "UserController#post_user_device_token"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        description: "firebase idToken: https://firebase.google.com/docs/database/rest/auth#firebase_id_tokens"
+        required: true
+        type: "string"
+      - name: "device_token"
+        in: "query"
+        description: "device token for push notification."
+        required: false
+        type: "string"
+      responses:
+        400:
+          description: "Unauthorized - invalid device_token"
+        401:
+          description: "Unauthorized - invalid Authorization header"
 definitions:
   Delivery:
     type: "object"
@@ -259,7 +286,7 @@ definitions:
         type: "integer"
       name:
         type: "string"
-        description: "Cancellation reason's name. e.g. 'Weather Condition', 'Not in the mood', 'Kids are not in the mood', 'Too expensive', 'Too far', 'Already have a plan', 'Other', etc.n"
+        description: "Cancellation reason's name. e.g. 'Weather Condition', 'Not in the mood', 'Kids are not in the mood', 'Too expensive', 'Too far', 'Already have a plan', 'Other', etc"
   Activity:
     type: "object"
     properties:
