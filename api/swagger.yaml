@@ -6,7 +6,7 @@ info:
   termsOfService: ""
   contact:
     email: "kenzan.hase@isidentsu.com"
-host: "famili-app.herokuapp.com"
+host: "fammili-app.herokuapp.com"
 basePath: "/"
 tags:
 - name: "APIs"
