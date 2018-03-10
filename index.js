@@ -5,6 +5,7 @@ var fs = require('fs'),
     http = require('http');
 
 var app = require('connect')();
+var cors = require('cors');
 
 var swaggerTools = require('swagger-tools');
 var jsyaml = require('js-yaml');
@@ -33,7 +34,9 @@ var swaggerDoc = jsyaml.safeLoad(spec);
 // Initialize the Swagger middleware
 swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
 
-  // Interpret Swagger resources and attach metadata to request - must be first in swagger-tools middleware chain
+  app.use(cors());
+
+   // Interpret Swagger resources and attach metadata to request - must be first in swagger-tools middleware chain
   app.use(middleware.swaggerMetadata());
 
   // Validate Swagger requests
@@ -50,5 +53,4 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
     console.log('Your server is listening on port %d (http://localhost:%d)', serverPort, serverPort);
     console.log('Swagger-ui is available on http://localhost:%d/docs', serverPort);
   });
-
 });

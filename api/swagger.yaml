@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  description: "Fammili is a stress-free weekend planner that allows you to enjoy casual and affordable weekends.\n- [heroku](https://famili-app.herokuapp.com)\n- [github](https://github.com/InolabSF/famili-server)"
+  description: "Fammili is a stress-free weekend planner that allows you to enjoy casual and affordable weekends.\n- [heroku](https://fammili-app.herokuapp.com)\n- [github](https://github.com/InolabSF/famili-server)"
   version: "0.1.0"
   title: "fammili-server"
   termsOfService: ""
@@ -21,8 +21,7 @@ paths:
       summary: "API serving json about one activity."
       description: ""
       operationId: "ActivityController#get_activity"
-      consumes:
-      - "application/json"
+      consumes: []
       produces:
       - "application/json"
       parameters:
@@ -41,8 +40,7 @@ paths:
       summary: "API serving json about cards that Fammili recommends to user."
       description: ""
       operationId: "ActivityController#get_activities"
-      consumes:
-      - "application/json"
+      consumes: []
       produces:
       - "application/json"
       parameters:
@@ -66,8 +64,7 @@ paths:
       summary: "API serving json about one user."
       description: ""
       operationId: "UserController#get_user"
-      consumes:
-      - "application/json"
+      consumes: []
       produces:
       - "application/json"
       parameters:
@@ -211,8 +208,7 @@ paths:
       summary: "API serving info about User#schedule_version."
       description: ""
       operationId: "UserController#get_user_schedule_version"
-      consumes:
-      - "application/json"
+      consumes: []
       produces:
       - "application/json"
       parameters:
